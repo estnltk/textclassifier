@@ -17,7 +17,7 @@ class MergeAcceptanceTest(unittest.TestCase):
     """Test for merge.py application."""
     
     def setUp(self):
-        self.tempdir = mkdtemp(prefix='estnltk.textclassifiertest_')
+        self.tempdir = mkdtemp(prefix='textclassifiertest_')
     
     def input_file(self):
         return os.path.join(TEST_PATH, 'original.xlsx')
@@ -35,7 +35,7 @@ class MergeAcceptanceTest(unittest.TestCase):
         return os.path.join(self.tempdir, 'output.csv')
     
     def when_merge(self):
-        return call([sys.executable, '-m', 'estnltk.textclassifier.merge', self.definitions_file(), self.input_file(), self.extra_file(), self.output_file(), '0.5'])
+        return call([sys.executable, '-m', 'textclassifier.merge', self.definitions_file(), self.input_file(), self.extra_file(), self.output_file(), '0.5'])
     
     def then_output_file_is_created(self):
         self.assertTrue(os.path.exists(self.output_file()))

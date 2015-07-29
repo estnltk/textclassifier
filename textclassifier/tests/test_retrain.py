@@ -15,7 +15,7 @@ from tempfile import mkdtemp
 class UserRetrainsModelTest(unittest.TestCase):
     
     def setUp(self):
-        self.tempdir = mkdtemp(prefix='estnltk.textclassifiertest_')
+        self.tempdir = mkdtemp(prefix='textclassifiertest_')
         self._train_dataframe_size = None
 
     def deffile(self):
@@ -46,10 +46,10 @@ class UserRetrainsModelTest(unittest.TestCase):
         return os.path.join(self.tempdir, 'weather_out.xlsx')
     
     def traincommand(self):
-        return [sys.executable, '-m', 'estnltk.textclassifier.train', self.deffile(), self.datafile(), self.modelfile(), '-r', self.reportfile()] 
+        return [sys.executable, '-m', 'textclassifier.train', self.deffile(), self.datafile(), self.modelfile(), '-r', self.reportfile()]
     
     def retraincommand(self):
-        return [sys.executable, '-m', 'estnltk.textclassifier.retrain', self.datafile(), self.modelfile(), self.modelfile(), '-t', '0.0', '-r', self.reportfile()] 
+        return [sys.executable, '-m', 'textclassifier.retrain', self.datafile(), self.modelfile(), self.modelfile(), '-t', '0.0', '-r', self.reportfile()]
     
     def user_runs_training_command(self):
         call(self.traincommand())

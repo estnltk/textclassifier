@@ -2,7 +2,7 @@
 """
 Module containing functionality for processing Estonian.
 """
-from __future__ import unicode_literals, print_function, absolute_import
+from __future__ import unicode_literals, print_function
 
 from .synunifier import SynUnifier
 from estnltk import analyze
@@ -70,7 +70,7 @@ class SimpleTextAnalyzer(object):
         return [word for word in sentence if word not in self._stopwords]
 
     def _remove_digits(self, sentence):
-        return [word for word in sentence if not self._contains_digits(word)]
+        return [word for word in sentence if not self._contains_digits(word) and len(word) > 0]
     
     def _contains_digits(self, word):
         return bool(self._digitre.search(word)) 

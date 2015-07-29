@@ -15,7 +15,7 @@ class UserTrainsAndUsesModelTest(unittest.TestCase):
     """Main test that does full cycle with excel files."""
 
     def setUp(self):
-        self.tempdir = mkdtemp(prefix='estnltk.textclassifiertest_')
+        self.tempdir = mkdtemp(prefix='textclassifiertest_')
 
     def deffile(self):
         return os.path.join(TEST_PATH, 'weather.def')
@@ -45,10 +45,10 @@ class UserTrainsAndUsesModelTest(unittest.TestCase):
         return os.path.join(self.tempdir, 'weather_out.xlsx')
     
     def traincommand(self):
-        return [sys.executable, '-m', 'estnltk.textclassifier.train', self.deffile(), '--synonyms', self.synfile(), self.datafile(), self.modelfile(), '-r='+self.reportfile()] 
+        return [sys.executable, '-m', 'textclassifier.train', self.deffile(), '--synonyms', self.synfile(), self.datafile(), self.modelfile(), '-r='+self.reportfile()]
     
     def classifycommand(self):
-        return [sys.executable, '-m', 'estnltk.textclassifier.classify', self.infile(), self.outfile(), self.modelfile()] 
+        return [sys.executable, '-m', 'textclassifier.classify', self.infile(), self.outfile(), self.modelfile()]
     
     def user_runs_training_command(self):
         call(self.traincommand())
@@ -85,5 +85,3 @@ class UserInputsAndOutputsCsvFile(UserTrainsAndUsesModelTest):
 
     def outfile(self):
         return os.path.join(self.tempdir, 'weather_out.csv')
-
-        

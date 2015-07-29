@@ -23,5 +23,5 @@ class AnalyzerTest(unittest.TestCase):
         return 'Valgus on sama, mis heledus.'
 
     def lemmas(self):
-        return set(['valk', 'valguma', 'valgus', 'sama', 'valgus'])
+        return set(['valgus', 'sama'])
 
