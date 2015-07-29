@@ -4,11 +4,11 @@ import os
 import sys
 
 setup(
-    name = "textclassifier",
-    version = "1.2",
+    name = "estnltk-textclassifier",
+    version = "1.2.2",
     packages = find_packages(),
     package_data = {
-        'textclassifier.texts': ['*.txt', '*.def', '*.csv', '*.xlsx']
+        'textclassifier.tests': ['*.txt', '*.def', '*.csv', '*.xlsx']
     },
 
     author       = "University of Tartu",
@@ -21,9 +21,7 @@ setup(
     # we have fixed dependency versions to guarantee, what works
     # however, you can probably safely install newer versions of the dependencies
     install_requires = [
-        'estnltk==1.2',                    # estnltk dependency
-        'six==1.9.0',                      # helps to build Py2/Py3 compatible programs
-        'pandas==0.15.2',                  # Panel Data Analysis library for Python
+        'estnltk==1.2.2',                  # estnltk dependency (contains also various other dependencies needed)
         'scikit-learn==0.16.1'             # Python machine learning library
         ],
 
