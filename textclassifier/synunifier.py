@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
-'''Module containing functionality for problem-specific synonym unification.'''
+"""Module containing functionality for problem-specific synonym unification."""
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
 from copy import deepcopy
 import codecs
 
+
 class SynUnifier(object):
-    '''Class for storing technical synonyms.'''
+    """Class for storing technical synonyms."""
     
     def __init__(self, mapped_values={}):
-        '''Initialize a SynUnifier instance.
+        """Initialize a SynUnifier instance.
         
         Parameters
         ----------
@@ -24,14 +25,14 @@ class SynUnifier(object):
         
         ValueError
             If at least one value in `mapped_values.values()` does not satisfy `mapped_values[value] == value`.
-        '''
+        """
         self._map = {}
         for key, value in mapped_values.items():
             self._map_word(key.lower(), value.lower())
         self._check_target_values()
     
     def add_synset(self, synset):
-        '''Add a synset to the object.
+        """Add a synset to the object.
         
         Parameters
         ----------
@@ -46,7 +47,7 @@ class SynUnifier(object):
         ValueError
             If the given collection of synsets does not contain at least two unique elements.
         
-        '''
+        """
         words = [word.lower() for word in synset]
         if len(set(words)) < 2:
             err = 'Synsets {0} must have at least 2 case-insensitive unique elements.'.format(repr(synset))
@@ -56,7 +57,7 @@ class SynUnifier(object):
             self._map_word(other_word, main_word)
     
     def unify(self, word):
-        '''Unify the given word.
+        """Unify the given word.
         
         Parameters
         ----------
@@ -68,7 +69,7 @@ class SynUnifier(object):
         -------
         str
             The target synonym of the given word, if it exists. Otherwise returns the same word.
-        '''
+        """
         
         word = word.lower()
         if word in self._map:
@@ -76,14 +77,14 @@ class SynUnifier(object):
         return word
 
     def export(self):
-        '''Export the instance to a JSON-serializable dictionary.
+        """Export the instance to a JSON-serializable dictionary.
         
         Returns
         -------
         dict
             The dictionary contains str key and value mappings from alternative word representations to
             its main representation.
-        '''
+        """
         return deepcopy(self._map)
     
     def _check_target_values(self):
@@ -105,16 +106,16 @@ class SynUnifier(object):
 
 
 class SynFileReader(object):
-    '''Class to read technical synonym files.'''
+    """Class to read technical synonym files."""
     
     def __init__(self, fnm):
-        '''Initialize SynFileReader.
+        """Initialize SynFileReader.
         
         Parameters
         ----------
         fnm: str
             Filename of the file to be read from disk.
-        '''
+        """
         self._fnm = fnm
     
     def read(self):

@@ -22,6 +22,9 @@ setup(
     # however, you can probably safely install newer versions of the dependencies
     install_requires = [
         'estnltk==1.2'                     # estnltk dependency
+        'six==1.9.0',                      # helps to build Py2/Py3 compatible programs
+        'pandas==0.15.2',                  # Panel Data Analysis library for Python
+        'scikit-learn==0.16.1'             # Python machine learning library
         ],
 
     classifiers = ['Intended Audience :: Developers',

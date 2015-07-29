@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.settings import Settings, NUM_CORES
-from estnltk.textclassifier.analyzer import SimpleTextAnalyzer
+from .settings import Settings, NUM_CORES
+from .analyzer import SimpleTextAnalyzer
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.pipeline import FeatureUnion
@@ -19,7 +19,7 @@ except ImportError:
 
 
 class FeatureExtractor(object):
-    '''Class for exracting features from dataframe object.
+    """Class for exracting features from dataframe object.
     
     Attributes
     ----------
@@ -27,10 +27,10 @@ class FeatureExtractor(object):
     _transform_only: bool
         True, if extractor was initiated from previously serialized vectorizer and labelencoder.
     
-    '''
+    """
     
     def __init__(self, settings, dataframe, vectorizer=None, labelencoder=None):
-        '''Initiate a featureextractor.
+        """Initiate a featureextractor.
         
         Parameters
         ----------
@@ -45,7 +45,7 @@ class FeatureExtractor(object):
             Pickled and base64-encoded vectorizer from previous serialization.
         labelencoder: str
             Pickled and base64-encoded labelencoder from previous serialization.
-        '''
+        """
         assert isinstance(settings, Settings)
         
         self._settings = settings
@@ -101,24 +101,24 @@ class FeatureExtractor(object):
 
     @property
     def strings(self):
-        '''Get feature strings.
+        """Get feature strings.
         
         Returns
         -------
         list[unicode]
             Dataframe columns concatenated to a single string.
-        '''
+        """
         if 'strings' not in self._cache:
             self._cache['strings'] = [' '.join(row) for row in self._dataframe[self._settings.features].fillna('').values]
         return self._cache['strings']
 
     @property
     def X(self):
-        '''Returns
+        """Returns
         -------
         scipy.sparse
             Sparse matrix containing textual features for classification.
-        '''
+        """
         if 'X' not in self._cache:
             X = self.strings
             if self._transform_only:
@@ -129,11 +129,11 @@ class FeatureExtractor(object):
 
     @property
     def y(self):
-        '''Returns
+        """Returns
         -------
         numpy.array
             Labels encoded as integer values. Use get_labels() for mapping them back to strings.
-        '''
+        """
         if 'y' not in self._cache:
             y = list(self._dataframe[self._settings.label].fillna(''))
             if self._transform_only:
@@ -144,19 +144,19 @@ class FeatureExtractor(object):
     
     @property
     def feature_names(self):
-        '''Returns
+        """Returns
         -------
         list[unicode]
             Meaningful feature names for vectorized feature matrix columns.
-        '''
+        """
         return self._vectorizer.get_feature_names()
     
     @property
     def labels(self):
-        '''Returns
+        """Returns
         -------
         list[unicode]
             Labels for for encoded labels (y).
-        '''
+        """
         self.y
         return [l for l in self._labelencoder.classes_] 

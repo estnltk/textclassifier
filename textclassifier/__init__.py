@@ -1,4 +1,4 @@
-from estnltk.textclassifier.settings import Settings, SettingsFileReader
-from estnltk.textclassifier.synunifier import SynUnifier, SynFileReader
-from estnltk.textclassifier.classifier import Clf
+from .settings import Settings, SettingsFileReader
+from .synunifier import SynUnifier, SynFileReader
+from .classifier import Clf
 

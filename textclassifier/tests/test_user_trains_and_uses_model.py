@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.paths import TEST_PATH
+from ..paths import TEST_PATH
 
 import unittest
 import os
@@ -12,7 +12,7 @@ from tempfile import mkdtemp
 
 
 class UserTrainsAndUsesModelTest(unittest.TestCase):
-    '''Main test that does full cycle with excel files.'''
+    """Main test that does full cycle with excel files."""
 
     def setUp(self):
         self.tempdir = mkdtemp(prefix='estnltk.textclassifiertest_')
@@ -61,7 +61,7 @@ class UserTrainsAndUsesModelTest(unittest.TestCase):
     
     def then_model_is_generated(self):
         if not os.path.isfile(self.modelfile()):
-            raise exception('no model generated')
+            raise Exception('no model generated')
     
     def user_runs_classification_command(self):
         call(self.classifycommand())

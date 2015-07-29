@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-'''Command line program for EKT model training.
-'''
+"""Command line program for EKT model training.
+"""
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.classifier import Clf
-from estnltk.textclassifier.utils import read_dataset, write_html
-from estnltk.textclassifier.utils import check_filename, save_classifier, load_classifier
+from .classifier import Clf
+from .utils import read_dataset, write_html
+from .utils import check_filename, save_classifier, load_classifier
 
 import argparse
 import sys
@@ -18,7 +18,7 @@ import six
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('train')
 
-parser = argparse.ArgumentParser(prog='estnltk.textclassifier.retrain')
+parser = argparse.ArgumentParser(prog='textclassifier.retrain')
 parser.add_argument(
     'dataset',
     help=('Dataset to use for training. Must contain columns defined in settings file.'

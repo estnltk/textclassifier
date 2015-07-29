@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
 import unittest
 
-from estnltk.textclassifier.featureextractor import FeatureExtractor
-from estnltk.textclassifier.settings import Settings
+from ..featureextractor import FeatureExtractor
+from ..settings import Settings
 
 from pandas import DataFrame
 

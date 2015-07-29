@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.paths import TEST_PATH
-from estnltk.textclassifier.utils import load_classifier
+from ..paths import TEST_PATH
+from ..utils import load_classifier
 
 import unittest
 import os
@@ -67,7 +67,7 @@ class UserRetrainsModelTest(unittest.TestCase):
     
     def then_model_is_generated(self):
         if not os.path.isfile(self.modelfile()):
-            raise exception('no model generated')
+            raise Exception('no model generated')
     
     def user_runs_retrain_command(self):
         call(self.retraincommand())

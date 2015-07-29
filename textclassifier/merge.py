@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.settings import Settings, SettingsFileReader
-from estnltk.textclassifier.utils import read_dataset, write_dataset
-from estnltk.textclassifier.utils import check_filename
-from estnltk.textclassifier.classifier import merge_datasets
+from .settings import Settings, SettingsFileReader
+from .utils import read_dataset, write_dataset
+from .utils import check_filename
+from .classifier import merge_datasets
 
 import argparse
 import sys
@@ -16,7 +16,7 @@ import codecs
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('merge')
 
-parser = argparse.ArgumentParser(prog='estnltk.textclassifier.merge')
+parser = argparse.ArgumentParser(prog='textclassifier.merge')
 parser.add_argument(
     'settings',
     help='Settings definitions containing features columns, label column and confidence column.')
@@ -62,7 +62,8 @@ parser.add_argument(
     '--outsep',
     default = ',',
     help='Column separator for output data CSV file (default is ,).')
-    
+
+
 class MergeApp(object):
     
     def __init__(self, args):

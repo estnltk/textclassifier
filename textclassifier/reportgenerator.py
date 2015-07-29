@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.featureextractor import FeatureExtractor
-from estnltk.textclassifier.clfbase import ClfBase, get_sig_features
+from .featureextractor import FeatureExtractor
+from .clfbase import ClfBase, get_sig_features
 from estnltk import analyze
 
 from sklearn.cluster import Ward
@@ -25,12 +25,13 @@ except ImportError:
     from cgi import escape as htmlescape
 from collections import defaultdict
 from copy import copy
- 
+
+
 class Renumberer(TransformerMixin):
-    '''Class for renumbering integers so that they are consequent.
+    """Class for renumbering integers so that they are consequent.
     
     As we reorder the labels in computations, it is necessary to make sure they are consequent as otherwise
-    scikit learn metrics functions complain.'''
+    scikit learn metrics functions complain."""
     
     def __init__(self, **kwargs):
         self._map = {}
@@ -47,7 +48,7 @@ class Renumberer(TransformerMixin):
 
     
 class ReportGeneratorData(dict):
-    '''Dictionary containing report generator data.'''
+    """Dictionary containing report generator data."""
     
     def __init__(self, clfbase, coef):
         dict.__init__(self)
@@ -62,7 +63,7 @@ class ReportGeneratorData(dict):
 
     @property
     def coverage_curve(self):
-        '''Compute coverage statistics.
+        """Compute coverage statistics.
         
         Returns
         -------
@@ -71,7 +72,7 @@ class ReportGeneratorData(dict):
                 Coverage percentages
                 F1-scores
                 Cutoff values
-        '''
+        """
         data = list(zip(self['y_true'], self['y_pred'], self['y_prob']))
         data.sort(key=lambda x: x[2], reverse=True)
         run_true, run_pred = [], []
@@ -136,11 +137,11 @@ class TextAnnotator(object):
 
 
 class ReportGenerator(object):
-    '''Class for generating HTML raports.
+    """Class for generating HTML raports.
     
     Raports containg statistics and evaluation data for estimating the model performance
     and providing clues to improve the performance.
-    '''
+    """
     
     def __init__(self, data):
         assert isinstance(data, ReportGeneratorData)
@@ -166,11 +167,11 @@ class ReportGenerator(object):
     
     @property
     def classification_report(self):
-        '''Returns
+        """Returns
         -------
         unicode
             HTML containing the classification report.
-        '''
+        """
         y_true, y_pred = self._data['y_true'], self._data['y_pred']
         labels = self._data['labels']
         # tag total p, r, f1, s
@@ -223,7 +224,7 @@ class ReportGenerator(object):
         return fig
     
     def _as_blob(self, fig):
-        '''Get the figure as binary blob.'''
+        """Get the figure as binary blob."""
         f = tempfile.NamedTemporaryFile(suffix='.svg')
         fig.savefig(f, format='svg', transparent=True, bbox_inches='tight', pad_inches=1)
         f.seek(0)
@@ -233,11 +234,11 @@ class ReportGenerator(object):
     
     @property
     def sentence_report(self):
-        '''Returns
+        """Returns
         -------
         unicode
             HTML containing misclassified sentences.
-        '''
+        """
         y_true, y_pred, sentences = self._data['y_true'], self._data['y_pred'], self._data['sentences']
         labels = self._data['labels']
         D = defaultdict(list)
@@ -285,14 +286,14 @@ class ReportGenerator(object):
 
     @property
     def main_report(self):
-        html = '''<!DOCTYPE html>
+        html = """<!DOCTYPE html>
             <html>
             <head>
                 <meta charset="utf-8">
                 <title>Classification report</title>
             </head>
 
-            <body>'''
+            <body>"""
         html += self.classification_report + '\n'
         html += '<h3>Confidence cutoff / F1 curve</h3>'
         html += '<p>Each classified data point has a confidence score -- the higher the score, the lower the probability of '
@@ -327,14 +328,14 @@ class ReportGenerator(object):
             if t != p:
                 D[(t, p)].append(i)
                 assert labels[t] == df[settings.label][i]
-        html = '''<!DOCTYPE html>
+        html = """<!DOCTYPE html>
             <html>
             <head>
                 <meta charset="utf-8">
                 <title>Classification report</title>
             </head>
 
-            <body>'''
+            <body>"""
         html += '<h3>Misclassified data</h3>'
         for s, s_label in enumerate(labels):
             for d, d_label in enumerate(labels):

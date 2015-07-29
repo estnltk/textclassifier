@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.featureextractor import FeatureExtractor
-from estnltk.textclassifier.settings import Settings
-from estnltk.textclassifier.reportgenerator import ReportGenerator, ReportGeneratorData
-from estnltk.textclassifier.clfbase import ClfBase
+from .featureextractor import FeatureExtractor
+from .settings import Settings
+from .reportgenerator import ReportGenerator, ReportGeneratorData
+from .clfbase import ClfBase
 from sklearn.metrics import precision_recall_fscore_support, precision_score, recall_score, f1_score
 from sklearn import preprocessing
 from copy import copy
@@ -26,7 +26,7 @@ except ImportError:
 logger = logging.getLogger('clf')
 
 class Clf(ClfBase):
-    '''estnltk.textclassifier classifier.
+    """estnltk.textclassifier classifier.
     
     Attributes
     ----------
@@ -42,10 +42,10 @@ class Clf(ClfBase):
         Misclassified data report of training results.
     _train_dataframe: pandas.DataFrame
         Original data used for training. It is needed for active learning.
-    '''
+    """
 
     def __init__(self, settings):
-        '''Initialize the classifier.'''
+        """Initialize the classifier."""
         
         assert isinstance(settings, Settings)
         self._settings = settings
@@ -56,7 +56,7 @@ class Clf(ClfBase):
         self._train_dataframe = None
 
     def train(self, dataframe, report=True):
-        '''Train the classifier.
+        """Train the classifier.
         
         Parameters
         ----------
@@ -69,7 +69,7 @@ class Clf(ClfBase):
         -------
         Clf
             return self.
-        '''
+        """
         starttime = time.time()
         logger.info('Training new model with settings{0} and dataframe with {1} rows'.format(self._settings,
                                                                                              dataframe.shape[0]))
@@ -97,7 +97,7 @@ class Clf(ClfBase):
         return self
     
     def classify(self, dataframe):
-        '''Classify the dataframe.
+        """Classify the dataframe.
         
         Raises
         ------
@@ -108,7 +108,7 @@ class Clf(ClfBase):
         -------
         DataFrame
             The original dataframe with additional label and confidence columns.
-        '''
+        """
         logger.info('Starting classification task.')
         starttime = time.time()
         if self._clf is None:
@@ -130,7 +130,7 @@ class Clf(ClfBase):
         return dataframe
         
     def test(self, dataframe):
-        '''Test the classifier using given annotated dataframe.
+        """Test the classifier using given annotated dataframe.
         
         Parameters
         ----------
@@ -141,7 +141,7 @@ class Clf(ClfBase):
         -------
         dict
             Dictionary containing the overall performance characterstics and also by each class.
-        '''
+        """
         logger.info('Starting testing task')
         starttime = time.time()
         true = list(dataframe[self._settings.label])
@@ -169,7 +169,7 @@ class Clf(ClfBase):
                 'labels': [{'label': d[0], 'precision': d[1], 'recall': d[2], 'f1_score': d[3], 'count': d[4]} for d in data_f1]}
         
     def retrain(self, dataframe, conf_treshold=0.0, report=True):
-        '''Retrain the classifier using extra data.
+        """Retrain the classifier using extra data.
         
         Parameters
         ----------
@@ -187,7 +187,7 @@ class Clf(ClfBase):
         -------
         Clf
             self
-        '''
+        """
             
         logger.info('Starting retraining task with conf_treshold={0}'.format(conf_treshold))
         starttime = time.time()
@@ -204,13 +204,13 @@ class Clf(ClfBase):
         return self
     
     def export_json(self):
-        '''Export the classifier as a JSON string.
+        """Export the classifier as a JSON string.
         
         Returns
         -------
         str
             JSON encoded data
-        '''
+        """
         data = {'clf': base64.b64encode(pickle.dumps(self._clf)).decode('ascii'),
                 'featureextractor': self._fe_serialized,
                 'train_dataframe': str(self._train_dataframe.to_json()),
@@ -221,13 +221,13 @@ class Clf(ClfBase):
     
     @staticmethod
     def from_json(json_data):
-        '''Import previously exported classifier from a JSON string.
+        """Import previously exported classifier from a JSON string.
         
         Parameters
         ----------
         json: str
             JSON encoded classifier.
-        '''
+        """
         data = json.loads(json_data)
         settings = Settings(**data['settings'])
         classifier = pickle.loads(base64.b64decode(data['clf'].encode('ascii')))
@@ -245,7 +245,7 @@ class Clf(ClfBase):
 
     @property
     def report(self):
-        '''Obtain the main part of training report created during training.
+        """Obtain the main part of training report created during training.
         
         Returns
         -------
@@ -253,12 +253,12 @@ class Clf(ClfBase):
             HTML containing the report
         None
             If there is no report, either because the model is not yet trained or was trained without report generation.
-        '''
+        """
         return copy(self._report)
     
     @property
     def misclassified_data(self):
-        '''Obtain misclassified data report creating during training.
+        """Obtain misclassified data report creating during training.
         
         Returns
         -------
@@ -266,7 +266,7 @@ class Clf(ClfBase):
             HTML containing the report
         None
             If there is no report, either because the model is not yet trained or was trained without report generation.
-        '''
+        """
         return copy(self._misclassified_data)
 
     @property
@@ -275,7 +275,7 @@ class Clf(ClfBase):
 
 
 def merge_datasets(settings, indata, extradata, conf_treshold):
-    '''Merge original dataset with extra data by keeping only
+    """Merge original dataset with extra data by keeping only
        best examples.
     
     Parameters
@@ -294,7 +294,7 @@ def merge_datasets(settings, indata, extradata, conf_treshold):
     -------
     pandas.DataFrame
         original data + extradata, where confidence >= conf_treshold.
-    '''
+    """
     
     B = extradata[extradata[settings.confidence] >= conf_treshold]
     columns = indata.columns

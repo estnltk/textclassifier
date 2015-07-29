@@ -1,28 +1,29 @@
 # -*- coding: utf-8 -*-
-'''Module containing the funtionality to handle settings.'''
+"""Module containing the funtionality to handle settings."""
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.synunifier import SynUnifier, SynFileReader
+from .synunifier import SynUnifier, SynFileReader
 
 import codecs
 from copy import copy
 
 NUM_CORES = 1
 
+
 class Settings(dict):
-    '''Classification task settings.
+    """Classification task settings.
     
     1. The feature column names.
     2. The label column name.
     3. The confidence column name.
     4. The Problem-pecific synonyms.
-    '''
+    """
     
     REQUIRED_KEYS = frozenset(['features', 'label'])
     
     def __init__(self, **kwargs):
-        '''Initialize classification task settings.
+        """Initialize classification task settings.
         
         Keyword parameters:
         -------------------
@@ -42,7 +43,7 @@ class Settings(dict):
         
         ValueError
             In case illegal arguments are passed to the constructor or if some arguments are missing.
-        '''
+        """
         
         for key, value in kwargs.items():
             if key == 'features':
@@ -68,7 +69,7 @@ class Settings(dict):
         
 
     def export(self):
-        '''Export the settings as a Python dictionary.'''
+        """Export the settings as a Python dictionary."""
         return {'features': copy(self.features),
                 'label': copy(self.label),
                 'confidence': copy(self.confidence),
@@ -107,7 +108,7 @@ class Settings(dict):
 
     @staticmethod
     def read(setfnm, synfnm=None):
-        '''Initialize settings from technical synonym and settings files.
+        """Initialize settings from technical synonym and settings files.
         
         Parameters
         ----------
@@ -121,7 +122,7 @@ class Settings(dict):
         -------
         Settings
             Dictionary containing the settings and technical synonym vocabulary.
-        '''
+        """
         settings = SettingsFileReader(setfnm).read()
         if synfnm is not None:
             unifier = SynFileReader(synfnm).read()
@@ -132,7 +133,7 @@ class Settings(dict):
 
 
 class SettingsFileReader(object):
-    '''Class to read settings files.'''
+    """Class to read settings files."""
     
     SECTIONS = ['[features]', '[label]', '[confidence]']
     
@@ -147,13 +148,13 @@ class SettingsFileReader(object):
         self._lineno = 0
     
     def read(self):
-        '''
+        """
         Returns
         -------
         Dictionary containing 'features', 'label' and 'confidence' values.
         
         NB! Use Settings.read instead to load the settings also with synonym vocabulary.
-        '''
+        """
         self._initialize()
         with codecs.open(self._fnm, 'rb', 'utf-8') as f:
             line = f.readline()
@@ -191,4 +192,3 @@ class SettingsFileReader(object):
             self._confidence = line
         else:
             raise ValueError('No section defined on line {0}'.format(self._lineno))
-        

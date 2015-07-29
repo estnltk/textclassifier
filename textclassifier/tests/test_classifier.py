@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.paths import TEST_PATH
-from estnltk.textclassifier.classifier import Clf
-from estnltk.textclassifier.settings import Settings
+from ..paths import TEST_PATH
+from ..classifier import Clf
+from ..settings import Settings
 
 import unittest
 import os
 import pandas
+
 
 class ClassifierTest(unittest.TestCase):
 

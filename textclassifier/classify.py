@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-'''Command line program for classification.
-'''
+"""Command line program for classification.
+"""
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.utils import read_dataset, write_dataset
-from estnltk.textclassifier.utils import check_filename, load_classifier
+from .utils import read_dataset, write_dataset
+from .utils import check_filename, load_classifier
 
 import argparse
 import sys
@@ -16,7 +16,7 @@ import codecs
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('classify')
 
-parser = argparse.ArgumentParser(prog='estnltk.textclassifier.classify')
+parser = argparse.ArgumentParser(prog='textclassifier.classify')
 parser.add_argument(
     'indata',
     help=('Path for the input dataset that will be classified. It is possible to load .csv and .xlsx files.'))

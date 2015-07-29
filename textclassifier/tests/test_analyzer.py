@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.analyzer import SimpleTextAnalyzer
-from estnltk.textclassifier.synunifier import SynUnifier
+from ..analyzer import SimpleTextAnalyzer
+from ..synunifier import SynUnifier
 
 import unittest
 

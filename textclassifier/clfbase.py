@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.featureextractor import FeatureExtractor
+from .featureextractor import FeatureExtractor
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.cross_validation import StratifiedKFold
@@ -10,27 +10,27 @@ from sklearn.cross_validation import StratifiedKFold
 import numpy as np
 
 class ClfBase(object):
-    '''Base class for classification tasks.
+    """Base class for classification tasks.
     
     Provides funtions to perform basic evaluation of model building,
-    '''
+    """
     
     def __init__(self, feat_extractor):
-        '''Initialize.
+        """Initialize.
         
         Parameters
         ----------
         feat_extractor: FeatureExtractor
-        '''
+        """
         assert isinstance(feat_extractor, FeatureExtractor)
         self._fe = feat_extractor
         self._cache = {}
 
     def get_new_classifier(self):
-        '''Returns
+        """Returns
         -------
         new sklearn compatible classifier.
-        '''
+        """
         return LogisticRegression(penalty='l1')
 
     @property
@@ -39,7 +39,7 @@ class ClfBase(object):
     
     @property
     def cv_stats(self):
-        '''Perform cross-validation for model evaluation.
+        """Perform cross-validation for model evaluation.
         
         Returns
         -------
@@ -48,7 +48,7 @@ class ClfBase(object):
                 true labels
                 predicted labels
                 prediction probabilities
-        '''
+        """
         if 'y_true' in self._cache:
             return self._cache['y_true'], self._cache['y_pred'], self._cache['y_prob'], self._cache['sigfeatures']
         

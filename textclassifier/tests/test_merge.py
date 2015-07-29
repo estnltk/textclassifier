@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.utils import read_dataset
-from estnltk.textclassifier.paths import TEST_PATH
+from ..utils import read_dataset
+from ..paths import TEST_PATH
 
 import unittest
 import os
@@ -14,7 +14,7 @@ from tempfile import mkdtemp
 
 
 class MergeAcceptanceTest(unittest.TestCase):
-    '''Test for merge.py application.'''
+    """Test for merge.py application."""
     
     def setUp(self):
         self.tempdir = mkdtemp(prefix='estnltk.textclassifiertest_')

@@ -1,31 +1,38 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.synunifier import SynUnifier, SynFileReader
-from estnltk.textclassifier.paths import TEST_PATH
+from ..synunifier import SynUnifier, SynFileReader
+from ..paths import TEST_PATH
 
 import unittest
 import json
 import os
 
+
 def first_valid():
     return ['kl', 'klient']
+
 
 def first_duplicate():
     return ['klaient', 'kl']
 
+
 def second_valid():
     return ['digiboks', 'db', 'dbox', 'digibox', 'boks']
+
 
 def invalid_too_few_unique():
     return ['aa', 'aa']
 
+
 def invalid_different_cases():
     return ['AA', 'aa']
 
+
 def invalid_empty_string():
     return ['aa', '']
+
 
 def valid_serialized():
     return {
@@ -37,10 +44,12 @@ def valid_serialized():
         'digibox': 'digiboks',
         'boks': 'digiboks'}
 
+
 def invalid_serialized():
     d = valid_serialized()
     del d['digiboks']
     return d
+
 
 def compatible_serialized():
     return {
@@ -51,6 +60,7 @@ def compatible_serialized():
         'DBOX': 'digiboks',
         'digibox': 'digiboks',
         'boks': 'digiBoks'}
+
 
 class CorrectSynUnifierConstruction(unittest.TestCase):
     

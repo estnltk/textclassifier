@@ -1,10 +1,10 @@
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.classifier import ClfBase
-from estnltk.textclassifier.settings import Settings
-from estnltk.textclassifier.reportgenerator import ReportGenerator, ReportGeneratorData
-from estnltk.textclassifier.featureextractor import FeatureExtractor
-from estnltk.textclassifier.paths import TEST_PATH
+from ..classifier import ClfBase
+from ..settings import Settings
+from ..reportgenerator import ReportGenerator, ReportGeneratorData
+from ..featureextractor import FeatureExtractor
+from ..paths import TEST_PATH
 
 import unittest
 import os

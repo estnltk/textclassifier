@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals, print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
-from estnltk.textclassifier.settings import Settings, SettingsFileReader
-from estnltk.textclassifier.synunifier import SynFileReader
-from estnltk.textclassifier.paths import TEST_PATH
+from ..settings import Settings, SettingsFileReader
+from ..synunifier import SynFileReader
+from ..paths import TEST_PATH
 
 import unittest
 import os
@@ -24,50 +24,60 @@ def valid_settings():
                 'boks': 'digiboks'}
             }
 
+
 def settings_zerofeatures():
     settings = valid_settings()
     settings['features'] = []
     return settings
+
 
 def settings_zerolength_feature():
     settings = valid_settings()
     settings['features'] = ['f1', '', 'f3']
     return settings
 
+
 def settings_zerolength_label():
     settings = valid_settings()
     settings['label'] = ''
     return settings
+
 
 def settings_zerolength_confidence():
     settings = valid_settings()
     settings['confidence'] = ''
     return settings
 
+
 def settings_features_missing():
     settings = valid_settings()
     del settings['features']
     return settings
+
 
 def settings_label_missing():
     settings = valid_settings()
     del settings['label']
     return settings
 
+
 def settings_confidence_missing():
     settings = valid_settings()
     del settings['confidence']
     return settings
+
 
 def settings_duplicate_features():
     settings = valid_settings()
     settings['features'] = ['f1', 'f2', 'f1']
     return settings
 
+
 def settings_duplicate_names():
     settings = valid_settings()
     settings['confidence'] = 'f2'
     return settings
+
 
 class InitializationTest(unittest.TestCase):
     
