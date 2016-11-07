@@ -5,7 +5,7 @@ from __future__ import unicode_literals, print_function, absolute_import
 from .featureextractor import FeatureExtractor
 
 from sklearn.linear_model import LogisticRegression
-from sklearn.cross_validation import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold
 
 import numpy as np
 
@@ -55,13 +55,13 @@ class ClfBase(object):
         X = self._fe.X
         y = self._fe.y
         
-        kf = StratifiedKFold(y, n_folds=10, shuffle=True)
+        kf = StratifiedKFold(n_splits=10, shuffle=True)
         y_true, y_pred, y_prob = [], [], []
         sigfeatures = []
 
         order_indices = []
 
-        for train_index, test_index in kf:
+        for train_index, test_index in kf.split(X, y):
             order_indices.extend(test_index)
 			
             X_train, X_test = X[train_index], X[test_index]

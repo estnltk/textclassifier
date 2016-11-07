@@ -6,7 +6,6 @@ from .featureextractor import FeatureExtractor
 from .clfbase import ClfBase, get_sig_features
 from estnltk import analyze
 
-from sklearn.cluster import Ward
 from sklearn.feature_selection import chi2
 from sklearn.metrics import confusion_matrix, precision_recall_fscore_support, precision_score, recall_score, f1_score
 from sklearn.base import TransformerMixin
@@ -85,7 +84,7 @@ class ReportGeneratorData(dict):
             run_pred.extend(renumberer.transform([pred]))
             
             coverages.append(float(idx) / len(data))
-            f1s.append(f1_score(run_true, run_pred))
+            f1s.append(f1_score(run_true, run_pred, average='weighted'))
             cutoffs.append(prob)
         return coverages, f1s, cutoffs
 
@@ -176,9 +175,9 @@ class ReportGenerator(object):
         labels = self._data['labels']
         # tag total p, r, f1, s
         html = '<h3>Classification report</h3>'
-        prec = precision_score(y_true, y_pred)
-        rec  = recall_score(y_true, y_pred)
-        f1   = f1_score(y_true, y_pred)
+        prec = precision_score(y_true, y_pred, average='weighted')
+        rec  = recall_score(y_true, y_pred, average='weighted')
+        f1   = f1_score(y_true, y_pred, average='weighted')
         html += self.classification_report_total(prec, rec, f1)
         # tag metrics for each label
         

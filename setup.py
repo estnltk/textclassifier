@@ -21,8 +21,9 @@ setup(
     # we have fixed dependency versions to guarantee, what works
     # however, you can probably safely install newer versions of the dependencies
     install_requires = [
-        'estnltk==1.2.2',                  # estnltk dependency (contains also various other dependencies needed)
-        'scikit-learn==0.16.1'             # Python machine learning library
+        'estnltk>=1.4',
+        'scikit-learn>=0.18',
+        'matplotlib',
         ],
 
     classifiers = ['Intended Audience :: Developers',
